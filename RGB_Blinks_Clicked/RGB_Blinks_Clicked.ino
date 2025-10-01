@@ -21,6 +21,10 @@ bool buttonPressed = false;
 
 String currentColor = "OFF";
 
+bool ledState = LOW;
+unsigned long previousMillis = 0;
+const long interval = 1000;
+
 // the setup function runs once when you press reset or power the board
 void setup() {
 
@@ -39,9 +43,17 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
 
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+    if (ledState == LOW) {
+      ledState = HIGH;
+    } else {
+      ledState = LOW;
+    }
+  }
   Serial.print("Current Color : ");
   Serial.println(currentColor);
-
 
   pushButtonState = digitalRead(pushButton);
   //Inverse the state becuase module gives the opposite
@@ -70,92 +82,108 @@ void loop() {
 
   //RED
   if (ledCounter == 1) {
-    TurnColorON(RedLEDPin);
-    TurnColorOFF(GreenLEDPin);
-    TurnColorOFF(BlueLEDPin);
-    delay(1000);
-    TurnColorOFF(RedLEDPin);
-    TurnColorOFF(GreenLEDPin);
-    TurnColorOFF(BlueLEDPin);
-    delay(1000);
+    if (ledState == HIGH) {
+      TurnColorON(RedLEDPin);
+      TurnColorOFF(GreenLEDPin);
+      TurnColorOFF(BlueLEDPin);
+    } else {
+      TurnColorOFF(RedLEDPin);
+      TurnColorOFF(GreenLEDPin);
+      TurnColorOFF(BlueLEDPin);
+    }
+
     currentColor = "RED";
   }
 
   //GREEN
   else if (ledCounter == 2) {
-    TurnColorOFF(RedLEDPin);
-    TurnColorON(GreenLEDPin);
-    TurnColorOFF(BlueLEDPin);
-    delay(1000);
-    TurnColorOFF(RedLEDPin);
-    TurnColorOFF(GreenLEDPin);
-    TurnColorOFF(BlueLEDPin);
-    delay(1000);
+    if (ledState == HIGH) {
+      TurnColorOFF(RedLEDPin);
+      TurnColorON(GreenLEDPin);
+      TurnColorOFF(BlueLEDPin);
+    } else {
+      TurnColorOFF(RedLEDPin);
+      TurnColorOFF(GreenLEDPin);
+      TurnColorOFF(BlueLEDPin);
+    }
     currentColor = "GREEN";
   }
 
   //BLUE
   else if (ledCounter == 3) {
-    TurnColorOFF(RedLEDPin);
-    TurnColorOFF(GreenLEDPin);
-    TurnColorON(BlueLEDPin);
-    delay(1000);
-    TurnColorOFF(RedLEDPin);
-    TurnColorOFF(GreenLEDPin);
-    TurnColorOFF(BlueLEDPin);
-    delay(1000);
+    if (ledState == HIGH) {
+      TurnColorOFF(RedLEDPin);
+      TurnColorOFF(GreenLEDPin);
+      TurnColorON(BlueLEDPin);
+    } else {
+      TurnColorOFF(RedLEDPin);
+      TurnColorOFF(GreenLEDPin);
+      TurnColorOFF(BlueLEDPin);
+    }
     currentColor = "BLUE";
   }
 
   //YELLOW
   else if (ledCounter == 4) {
-    TurnColorON(RedLEDPin);
-    TurnColorON(GreenLEDPin);
-    TurnColorOFF(BlueLEDPin);
-    delay(1000);
-    TurnColorOFF(RedLEDPin);
-    TurnColorOFF(GreenLEDPin);
-    TurnColorOFF(BlueLEDPin);
-    delay(1000);
+    if (ledState == HIGH) {
+      TurnColorON(RedLEDPin);
+      TurnColorON(GreenLEDPin);
+      TurnColorOFF(BlueLEDPin);
+    }
+
+    else {
+      TurnColorOFF(RedLEDPin);
+      TurnColorOFF(GreenLEDPin);
+      TurnColorOFF(BlueLEDPin);
+    }
+
     currentColor = ("YELLOW");
   }
 
   //PURPLE
   else if (ledCounter == 5) {
-    TurnColorON(RedLEDPin);
-    TurnColorOFF(GreenLEDPin);
-    TurnColorON(BlueLEDPin);
-    delay(1000);
-    TurnColorOFF(RedLEDPin);
-    TurnColorOFF(GreenLEDPin);
-    TurnColorOFF(BlueLEDPin);
-    delay(1000);
+    if (ledState == HIGH) {
+      TurnColorON(RedLEDPin);
+      TurnColorOFF(GreenLEDPin);
+      TurnColorON(BlueLEDPin);
+    } else {
+      TurnColorOFF(RedLEDPin);
+      TurnColorOFF(GreenLEDPin);
+      TurnColorOFF(BlueLEDPin);
+    }
+
     currentColor = "PURPLE";
   }
 
   //CYAN
   else if (ledCounter == 6) {
-    TurnColorOFF(RedLEDPin);
-    TurnColorON(GreenLEDPin);
-    TurnColorON(BlueLEDPin);
-    delay(1000);
-    TurnColorOFF(RedLEDPin);
-    TurnColorOFF(GreenLEDPin);
-    TurnColorOFF(BlueLEDPin);
-    delay(1000);
+    if (ledState == HIGH) {
+      TurnColorOFF(RedLEDPin);
+      TurnColorON(GreenLEDPin);
+      TurnColorON(BlueLEDPin);
+    }
+
+    else {
+      TurnColorOFF(RedLEDPin);
+      TurnColorOFF(GreenLEDPin);
+      TurnColorOFF(BlueLEDPin);
+    }
+
     currentColor = "CYAN";
   }
 
   //WHITE
   else if (ledCounter == 7) {
-    TurnColorON(RedLEDPin);
-    TurnColorON(GreenLEDPin);
-    TurnColorON(BlueLEDPin);
-    delay(1000);
-    TurnColorOFF(RedLEDPin);
-    TurnColorOFF(GreenLEDPin);
-    TurnColorOFF(BlueLEDPin);
-    delay(1000);
+    if (ledState == HIGH) {
+      TurnColorON(RedLEDPin);
+      TurnColorON(GreenLEDPin);
+      TurnColorON(BlueLEDPin);
+    } else {
+      TurnColorOFF(RedLEDPin);
+      TurnColorOFF(GreenLEDPin);
+      TurnColorOFF(BlueLEDPin);
+    }
+
     currentColor = "WHITE";
   }
 
