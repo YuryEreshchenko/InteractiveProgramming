@@ -19,12 +19,12 @@ int ledCounter= 0;
 
 bool buttonPressed = false;
 
-string currentColor = "OFF"
+String currentColor = "OFF";
 
 // the setup function runs once when you press reset or power the board
 void setup() {
 
-  serial.begin(9600);
+  Serial.begin(9600);
 
   pinMode(RedLEDPin, OUTPUT);
   pinMode(GreenLEDPin, OUTPUT);
@@ -38,6 +38,10 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
+
+  Serial.print("Current Color : ");
+  Serial.println(currentColor);
+
 
   pushButtonState = digitalRead(pushButton);
   //Inverse the state becuase module gives the opposite
@@ -63,6 +67,7 @@ void loop() {
     TurnColorOFF(RedLEDPin);
     TurnColorOFF(GreenLEDPin);
     TurnColorOFF(BlueLEDPin);
+    currentColor = "OFF";
   }
 
   //RED
@@ -70,6 +75,7 @@ void loop() {
     TurnColorON(RedLEDPin);
     TurnColorOFF(GreenLEDPin);
     TurnColorOFF(BlueLEDPin);
+    currentColor = "RED";
   }
 
   //GREEN
@@ -77,6 +83,7 @@ void loop() {
     TurnColorOFF(RedLEDPin);
     TurnColorON(GreenLEDPin);
     TurnColorOFF(BlueLEDPin);
+    currentColor = "GREEN";
   }
   
   //BLUE
@@ -84,6 +91,7 @@ void loop() {
     TurnColorOFF(RedLEDPin);
     TurnColorOFF(GreenLEDPin);
     TurnColorON(BlueLEDPin);
+    currentColor = "BLUE";
   }
 
   //YELLOW
@@ -91,6 +99,7 @@ void loop() {
   TurnColorON(RedLEDPin);
   TurnColorON(GreenLEDPin);
   TurnColorOFF(BlueLEDPin);
+  currentColor = ("YELLOW");
   }
 
   //PURPLE
@@ -98,6 +107,7 @@ void loop() {
   TurnColorON(RedLEDPin);
   TurnColorOFF(GreenLEDPin);
   TurnColorON(BlueLEDPin);
+  currentColor = "PURPLE";
   }
 
   //CYAN
@@ -105,6 +115,7 @@ void loop() {
   TurnColorOFF(RedLEDPin);
   TurnColorON(GreenLEDPin);
   TurnColorON(BlueLEDPin);
+  currentColor = "CYAN";
   }
 
   //WHITE
@@ -112,6 +123,7 @@ void loop() {
     TurnColorON(RedLEDPin);
     TurnColorON(GreenLEDPin);
     TurnColorON(BlueLEDPin);
+    currentColor = "WHITE";
   }
 
   else if (ledCounter == 8){
