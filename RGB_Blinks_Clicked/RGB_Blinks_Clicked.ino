@@ -15,7 +15,7 @@ const int BlueLEDPin = 11;
 
 const int pushButton = 2;
 int pushButtonState = 0;
-int ledCounter= 0;
+int ledCounter = 0;
 
 bool buttonPressed = false;
 
@@ -47,23 +47,21 @@ void loop() {
   //Inverse the state becuase module gives the opposite
   if (pushButtonState == LOW) {
     pushButtonState = HIGH;
-  }
-  else if (pushButtonState == HIGH) {
+  } else if (pushButtonState == HIGH) {
     pushButtonState = LOW;
   }
 
   if (pushButtonState == HIGH && !buttonPressed) {
     ledCounter++;
     buttonPressed = true;
-    delay(5); //Debounce
-  }
-  else if (pushButtonState == LOW && buttonPressed){
+    delay(5);  //Debounce
+  } else if (pushButtonState == LOW && buttonPressed) {
     buttonPressed = false;
-    delay(5); //Debounce
+    delay(5);  //Debounce
   }
 
   //OFF
-  if (ledCounter == 0){
+  if (ledCounter == 0) {
     TurnColorOFF(RedLEDPin);
     TurnColorOFF(GreenLEDPin);
     TurnColorOFF(BlueLEDPin);
@@ -71,66 +69,99 @@ void loop() {
   }
 
   //RED
-  if (ledCounter == 1){
+  if (ledCounter == 1) {
     TurnColorON(RedLEDPin);
     TurnColorOFF(GreenLEDPin);
     TurnColorOFF(BlueLEDPin);
+    delay(1000);
+    TurnColorOFF(RedLEDPin);
+    TurnColorOFF(GreenLEDPin);
+    TurnColorOFF(BlueLEDPin);
+    delay(1000);
     currentColor = "RED";
   }
 
   //GREEN
-  else if (ledCounter == 2){
+  else if (ledCounter == 2) {
     TurnColorOFF(RedLEDPin);
     TurnColorON(GreenLEDPin);
     TurnColorOFF(BlueLEDPin);
+    delay(1000);
+    TurnColorOFF(RedLEDPin);
+    TurnColorOFF(GreenLEDPin);
+    TurnColorOFF(BlueLEDPin);
+    delay(1000);
     currentColor = "GREEN";
   }
-  
+
   //BLUE
-  else if (ledCounter == 3){
+  else if (ledCounter == 3) {
     TurnColorOFF(RedLEDPin);
     TurnColorOFF(GreenLEDPin);
     TurnColorON(BlueLEDPin);
+    delay(1000);
+    TurnColorOFF(RedLEDPin);
+    TurnColorOFF(GreenLEDPin);
+    TurnColorOFF(BlueLEDPin);
+    delay(1000);
     currentColor = "BLUE";
   }
 
   //YELLOW
-  else if (ledCounter == 4){
-  TurnColorON(RedLEDPin);
-  TurnColorON(GreenLEDPin);
-  TurnColorOFF(BlueLEDPin);
-  currentColor = ("YELLOW");
+  else if (ledCounter == 4) {
+    TurnColorON(RedLEDPin);
+    TurnColorON(GreenLEDPin);
+    TurnColorOFF(BlueLEDPin);
+    delay(1000);
+    TurnColorOFF(RedLEDPin);
+    TurnColorOFF(GreenLEDPin);
+    TurnColorOFF(BlueLEDPin);
+    delay(1000);
+    currentColor = ("YELLOW");
   }
 
   //PURPLE
-  else if (ledCounter == 5){
-  TurnColorON(RedLEDPin);
-  TurnColorOFF(GreenLEDPin);
-  TurnColorON(BlueLEDPin);
-  currentColor = "PURPLE";
+  else if (ledCounter == 5) {
+    TurnColorON(RedLEDPin);
+    TurnColorOFF(GreenLEDPin);
+    TurnColorON(BlueLEDPin);
+    delay(1000);
+    TurnColorOFF(RedLEDPin);
+    TurnColorOFF(GreenLEDPin);
+    TurnColorOFF(BlueLEDPin);
+    delay(1000);
+    currentColor = "PURPLE";
   }
 
   //CYAN
-  else if (ledCounter == 6){
-  TurnColorOFF(RedLEDPin);
-  TurnColorON(GreenLEDPin);
-  TurnColorON(BlueLEDPin);
-  currentColor = "CYAN";
+  else if (ledCounter == 6) {
+    TurnColorOFF(RedLEDPin);
+    TurnColorON(GreenLEDPin);
+    TurnColorON(BlueLEDPin);
+    delay(1000);
+    TurnColorOFF(RedLEDPin);
+    TurnColorOFF(GreenLEDPin);
+    TurnColorOFF(BlueLEDPin);
+    delay(1000);
+    currentColor = "CYAN";
   }
 
   //WHITE
-  else if (ledCounter == 7){
+  else if (ledCounter == 7) {
     TurnColorON(RedLEDPin);
     TurnColorON(GreenLEDPin);
     TurnColorON(BlueLEDPin);
+    delay(1000);
+    TurnColorOFF(RedLEDPin);
+    TurnColorOFF(GreenLEDPin);
+    TurnColorOFF(BlueLEDPin);
+    delay(1000);
     currentColor = "WHITE";
   }
 
-  else if (ledCounter == 8){
-    ledCounter= 0;
+  else if (ledCounter == 8) {
+    ledCounter = 0;
   }
-
-
 }
 
 void TurnColorON(int color) {
