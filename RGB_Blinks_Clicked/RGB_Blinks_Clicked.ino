@@ -23,7 +23,7 @@ String currentColor = "OFF";
 
 bool ledState = LOW;
 unsigned long previousMillis = 0;
-const long interval = 1000;
+const long interval = 10000;
 
 // the setup function runs once when you press reset or power the board
 void setup() {
