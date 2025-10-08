@@ -49,24 +49,30 @@ void loop() {
   unsigned long currentMillis = millis();
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis;
+
     if (ledState == LOW) {
       ledState = HIGH;
-    } else {
-      ledState = LOW;
-    if (directionColor == true){
-      ledCounter++;
-      if (ledCounter == 5){
-      ledCounter = 1;
-      }
-    }
-    else {
-      ledCounter--;
-      if (ledCounter == 0){
-      ledCounter = 4;
-      }
-    }
     }
 
+    else {
+      ledState = LOW;
+
+      if (directionColor == true) {
+        ledCounter++;
+
+        if (ledCounter == 5) {
+          ledCounter = 1;
+        }
+      }
+
+      else {
+        ledCounter--;
+
+        if (ledCounter == 0) {
+          ledCounter = 4;
+        }
+      }
+    }
   }
   Serial.print("Current Color : ");
   Serial.println(currentColor);
@@ -75,18 +81,20 @@ void loop() {
   //Inverse the state becuase module gives the opposite
   if (pushButtonState == LOW) {
     pushButtonState = HIGH;
-  } else if (pushButtonState == HIGH) {
+  }
+
+  else if (pushButtonState == HIGH) {
     pushButtonState = LOW;
   }
 
   if (pushButtonState == HIGH && !buttonPressed) {
-    
+
     directionColor = !directionColor;
 
     buttonPressed = true;
     delay(5);  //Debounce
-    } 
-    
+  }
+
   else if (pushButtonState == LOW && buttonPressed) {
     buttonPressed = false;
     delay(5);  //Debounce
@@ -96,11 +104,14 @@ void loop() {
 
   //RED
   if (ledCounter == 1) {
+
     if (ledState == HIGH) {
       TurnColorON(RedLEDPin);
       TurnColorOFF(GreenLEDPin);
       TurnColorOFF(BlueLEDPin);
-    } else {
+    } 
+    
+    else {
       TurnColorOFF(RedLEDPin);
       TurnColorOFF(GreenLEDPin);
       TurnColorOFF(BlueLEDPin);
@@ -113,11 +124,14 @@ void loop() {
 
   //GREEN
   else if (ledCounter == 2) {
+
     if (ledState == HIGH) {
       TurnColorOFF(RedLEDPin);
       TurnColorON(GreenLEDPin);
       TurnColorOFF(BlueLEDPin);
-    } else {
+    }
+
+    else {
       TurnColorOFF(RedLEDPin);
       TurnColorOFF(GreenLEDPin);
       TurnColorOFF(BlueLEDPin);
@@ -127,11 +141,14 @@ void loop() {
 
   //BLUE
   else if (ledCounter == 3) {
+
     if (ledState == HIGH) {
       TurnColorOFF(RedLEDPin);
       TurnColorOFF(GreenLEDPin);
       TurnColorON(BlueLEDPin);
-    } else {
+    }
+
+    else {
       TurnColorOFF(RedLEDPin);
       TurnColorOFF(GreenLEDPin);
       TurnColorOFF(BlueLEDPin);
@@ -145,26 +162,22 @@ void loop() {
       TurnColorON(RedLEDPin);
       TurnColorON(GreenLEDPin);
       TurnColorON(BlueLEDPin);
-    } else {
+    }
+
+    else {
       TurnColorOFF(RedLEDPin);
       TurnColorOFF(GreenLEDPin);
       TurnColorOFF(BlueLEDPin);
     }
 
     currentColor = "WHITE";
-    
   }
-
-
-  
-
-
 }
 
 void TurnColorON(int color) {
-  digitalWrite(color, LOW);  // turn the led (HIGH is the voltage level)
+  digitalWrite(color, LOW);  
 }
 
 void TurnColorOFF(int color) {
-  digitalWrite(color, HIGH);  // turn the led (HIGH is the voltage level)
+  digitalWrite(color, HIGH);  
 }
