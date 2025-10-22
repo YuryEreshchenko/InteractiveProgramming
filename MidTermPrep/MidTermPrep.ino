@@ -12,6 +12,21 @@ bool buttonPressed = false;
 
 int ledCounter = 1;           // Tracks current color (1-7)
 
+//Mode 0 : Constant Light
+//Mode 1 : Blick mode 
+//Mode 2 : Breathing light
+int currentMode = 0;
+
+unsigned long blinkTimer = 0;
+const int blinkInterval = 500;
+bool blinkOn = true;
+
+int RCurrentColor = 0;
+int GCurrentColor = 0;
+int BCurrentColor = 0;
+
+
+
 
 void setup() {
 
@@ -23,6 +38,8 @@ void setup() {
 
 }
 
+
+
 void loop() {
 
   int clickType = checkButton();
@@ -30,7 +47,61 @@ void loop() {
   if ( clickType == 1){
     changeLEDColor();
   }
+
+  else if (clickType == 2){
+    currentMode++;
+    if (currentMode >= 3){
+      currentMode = 0;
+    }
+    if(currentMode == 1){
+      blinkTimer = 0;
+      blinkOn = true;
+    }
+  }
+  
+  updateLEDColor(currentMode);
+
 }
+
+
+
+
+
+
+
+
+void updateLEDColor(int currentMode){
+
+    if (currentMode == 0){
+    Serial.println("Mode 0 : Static light");
+    //Nothing static light
+    }
+    
+    
+    //Blink mode
+    else if (currentMode == 1){
+    Serial.println("Mode 1 : Blink");
+    unsigned long currentTime = millis();
+    if(currentTime - blinkTimer > blinkInterval){
+      blinkOn = !blinkOn;
+      blinkTimer = currentTime;
+    }
+    if (blinkOn == true){
+      PowerLEDControl(RCurrentColor, GCurrentColor, BCurrentColor);
+    }
+    else{
+      PowerLEDControl(255, 255, 255);
+    }
+    }
+
+    //Fading mode
+    else if(currentMode == 2){
+    Serial.println("Mode 2 : Fading");
+
+    }
+
+}
+
 
 void changeLEDColor(){
     
@@ -41,19 +112,34 @@ void changeLEDColor(){
     } 
     if (ledCounter == 0){
     PowerLEDControl(0, 0, 0);
+    RCurrentColor = 0;
+    GCurrentColor = 0;
+    BCurrentColor = 0;
     }
     if (ledCounter == 1){
     PowerLEDControl(0, 255, 255);
+    RCurrentColor = 0;
+    GCurrentColor = 255;
+    BCurrentColor = 255;
     }
     if (ledCounter == 2){
     PowerLEDControl(255, 0, 255);
+    RCurrentColor = 255;
+    GCurrentColor = 0;
+    BCurrentColor = 255;
     }
     if (ledCounter == 3){
     PowerLEDControl(255, 255, 0);
+    RCurrentColor = 255;
+    GCurrentColor = 255;
+    BCurrentColor = 0;
     }
     if (ledCounter == 4){
     PowerLEDControl(255, 255, 255);
-    }
+    RCurrentColor = 255;
+    GCurrentColor = 255;
+    BCurrentColor = 255;
+    }     
 
 }
 
