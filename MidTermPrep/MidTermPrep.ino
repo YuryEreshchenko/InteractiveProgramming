@@ -6,8 +6,13 @@ const int pushButton = 2;
 
 int buttonState = 0;
 
+unsigned long pressingTime = 0;
+const long longPressInterval = 1000;
+bool buttonPressed = false; 
+
 void setup() {
 
+  Serial.begin(9600);
   pinMode(RedLEDPin, OUTPUT);
   pinMode(GreenLEDPin, OUTPUT);
   pinMode(BlueLEDPin, OUTPUT);
@@ -18,13 +23,30 @@ void setup() {
 void loop() {
 
   buttonState = !digitalRead(pushButton);
-  
-  if ( buttonState == HIGH){
-    PowerLEDControl(0, 0, 0);
+
+  if (buttonState == HIGH && !buttonPressed){
+    pressingTime = millis();
+    buttonPressed = true;
+    Serial.println("1");
+
   }
-  else{
-    PowerLEDControl(255, 255, 255);
-  } 
+  if (buttonState == LOW && buttonPressed){
+    unsigned long currentTime = millis();
+    if (currentTime - pressingTime < longPressInterval){
+      Serial.println("Short click");
+    }
+    else {
+      Serial.println("Long Press");
+    }
+    buttonPressed = false;
+  }
+
+  // if ( buttonState == HIGH){
+  //   PowerLEDControl(0, 0, 0);
+  // }
+  // else{
+  //   PowerLEDControl(255, 255, 255);
+  // } 
 
 }
 
