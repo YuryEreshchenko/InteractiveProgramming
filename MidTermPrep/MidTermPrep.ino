@@ -10,6 +10,9 @@ unsigned long pressingTime = 0;
 const long longPressInterval = 1000;
 bool buttonPressed = false; 
 
+int ledCounter = 1;           // Tracks current color (1-7)
+
+
 void setup() {
 
   Serial.begin(9600);
@@ -22,19 +25,43 @@ void setup() {
 
 void loop() {
 
-  checkButton();
+  int clickType = checkButton();
 
-  // if ( buttonState == HIGH){
-  //   PowerLEDControl(0, 0, 0);
-  // }
-  // else{
-  //   PowerLEDControl(255, 255, 255);
-  // } 
+  if ( clickType == 1){
+    changeLEDColor();
+  }
+}
+
+void changeLEDColor(){
+    
+    ledCounter++;
+
+    if (ledCounter == 5){
+    ledCounter = 0;
+    } 
+    if (ledCounter == 0){
+    PowerLEDControl(0, 0, 0);
+    }
+    if (ledCounter == 1){
+    PowerLEDControl(0, 255, 255);
+    }
+    if (ledCounter == 2){
+    PowerLEDControl(255, 0, 255);
+    }
+    if (ledCounter == 3){
+    PowerLEDControl(255, 255, 0);
+    }
+    if (ledCounter == 4){
+    PowerLEDControl(255, 255, 255);
+    }
 
 }
 
-void checkButton(){
+
+int checkButton(){
+  int clickType = 0;
   buttonState = !digitalRead(pushButton);
+  delay(5);
 
   if (buttonState == HIGH && !buttonPressed){
     pressingTime = millis();
@@ -44,12 +71,17 @@ void checkButton(){
     unsigned long currentTime = millis();
     if (currentTime - pressingTime < longPressInterval){
       Serial.println("Short click");
+      clickType = 1;
     }
     else {
       Serial.println("Long Press");
+      clickType = 2;
     }
     buttonPressed = false;
   }
+
+  return clickType;
+
 }
 
 
