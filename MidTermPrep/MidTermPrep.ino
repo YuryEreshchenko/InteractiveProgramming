@@ -20,20 +20,18 @@ void loop() {
   buttonState = !digitalRead(pushButton);
   
   if ( buttonState == HIGH){
-      PowerLEDControl(RedLEDPin, 0);
-      PowerLEDControl(GreenLEDPin, 0);
-      PowerLEDControl(BlueLEDPin, 0);
+    PowerLEDControl(0, 0, 0);
   }
   else{
-    PowerLEDControl(RedLEDPin, 255);
-    PowerLEDControl(GreenLEDPin, 255);
-    PowerLEDControl(BlueLEDPin, 255);
+    PowerLEDControl(255, 255, 255);
   } 
 
 }
 
-void PowerLEDControl(int color, int brightness) {
-  analogWrite(color, brightness);
+void PowerLEDControl(int red, int green, int blue) {
+  analogWrite(RedLEDPin, red);
+  analogWrite(GreenLEDPin, green);
+  analogWrite(BlueLEDPin, blue);
 }
 
 
