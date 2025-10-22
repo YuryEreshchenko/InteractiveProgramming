@@ -22,13 +22,23 @@ void setup() {
 
 void loop() {
 
+  checkButton();
+
+  // if ( buttonState == HIGH){
+  //   PowerLEDControl(0, 0, 0);
+  // }
+  // else{
+  //   PowerLEDControl(255, 255, 255);
+  // } 
+
+}
+
+void checkButton(){
   buttonState = !digitalRead(pushButton);
 
   if (buttonState == HIGH && !buttonPressed){
     pressingTime = millis();
     buttonPressed = true;
-    Serial.println("1");
-
   }
   if (buttonState == LOW && buttonPressed){
     unsigned long currentTime = millis();
@@ -40,15 +50,9 @@ void loop() {
     }
     buttonPressed = false;
   }
-
-  // if ( buttonState == HIGH){
-  //   PowerLEDControl(0, 0, 0);
-  // }
-  // else{
-  //   PowerLEDControl(255, 255, 255);
-  // } 
-
 }
+
+
 
 void PowerLEDControl(int red, int green, int blue) {
   analogWrite(RedLEDPin, red);
